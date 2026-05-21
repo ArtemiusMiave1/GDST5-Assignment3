@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class NucleusBoid3D : MonoBehaviour
 {
+    [Header("test")]
     public static List<NucleusBoid3D> allBoids = new List<NucleusBoid3D>();
     public static bool triggerPush;
     public static Vector3 pushOrigin;
@@ -84,10 +85,12 @@ public class NucleusBoid3D : MonoBehaviour
 
             if (pushDist > 0.01f)
             {
+                print(transform.position);
+                print(pushDir);
                 pushDir.Normalize();
 
-                float falloff =
-                    1f / (1f + pushDist * clickRadiusMultiplier);
+                float falloff = 1;
+                    //1f / (1f + pushDist * clickRadiusMultiplier);
 
                 clickForce =
                     pushDir * clickPushStrength * falloff;
@@ -180,6 +183,7 @@ public class NucleusBoid3D : MonoBehaviour
         // COMBINE
         //--------------------------------
 
+
         Vector3 acceleration =
             centerForce +
             boundaryForce +
@@ -192,6 +196,7 @@ public class NucleusBoid3D : MonoBehaviour
         velocity *= damping;
         acceleration += swirl;
         acceleration += clickForce;
+        velocity += clickForce;
 
         transform.position +=
             velocity * Time.deltaTime;
