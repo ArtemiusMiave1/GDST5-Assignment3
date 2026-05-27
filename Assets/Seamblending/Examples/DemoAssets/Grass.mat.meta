@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2474354d004189e41b190d33d4c7aad7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 326839
+  packageName: Mesh Seam Blending
+  packageVersion: 1.1.0
+  assetPath: Assets/Seamblending/Examples/DemoAssets/Grass.mat
+  uploadId: 775232

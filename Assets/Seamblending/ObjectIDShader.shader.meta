@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: bba0e493b853e2a49a143cd783b28c97
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 326839
+  packageName: Mesh Seam Blending
+  packageVersion: 1.1.0
+  assetPath: Assets/Seamblending/ObjectIDShader.shader
+  uploadId: 775232

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 91ab4b574887693409e4d988bc04032b
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 326839
+  packageName: Mesh Seam Blending
+  packageVersion: 1.1.0
+  assetPath: Assets/Seamblending/PostSeamBlending.shader
+  uploadId: 775232
