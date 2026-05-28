@@ -48,7 +48,7 @@ public class NucleusBoid3D : MonoBehaviour
 
     void OnEnable()
     {
-        spawner.boids.Add(this);
+        //spawner.boids.Add(this);
     }
 
     void OnDisable()
@@ -59,6 +59,7 @@ public class NucleusBoid3D : MonoBehaviour
     void Start()
     {
         velocity = Random.insideUnitSphere;
+        spawner.boids.Add(this);
     }
 
     Vector3 GetWanderDirection(Vector3 pos)
@@ -94,8 +95,6 @@ public class NucleusBoid3D : MonoBehaviour
 
             if (pushDist > 0.01f)
             {
-                print(transform.position);
-                print(pushDir);
                 pushDir.Normalize();
 
                 float falloff = 1;
