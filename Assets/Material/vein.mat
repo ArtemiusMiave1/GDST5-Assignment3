@@ -47,8 +47,9 @@ Material:
     - _ScrollingSpeed: 0.02
     - _SurfaceMovementSpeed: 0.01
     - _noiseScale: 0.001
+    - _wave_strength: 0
     m_Colors:
-    - _ColorTexture: {r: 0.4339623, g: 0.036672864, b: 0, a: 1}
+    - _ColorTexture: {r: 1, g: 0.081081085, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5392198790897155685

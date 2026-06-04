@@ -48,7 +48,8 @@ public class NucleusBoid3D : MonoBehaviour
 
     void OnEnable()
     {
-        //spawner.boids.Add(this);
+        velocity = Random.insideUnitSphere;
+        spawner.boids.Add(this);
     }
 
     void OnDisable()
@@ -60,6 +61,27 @@ public class NucleusBoid3D : MonoBehaviour
     {
         velocity = Random.insideUnitSphere;
         spawner.boids.Add(this);
+        if (spawner == null)
+        {
+            spawner = FindFirstObjectByType<BoidSpawner>();
+        }
+
+        if (spawner != null)
+        {
+            spawner.boids.Add(this);
+        }
+        else
+        {
+            Debug.LogError("No BoidSpawner found in scene");
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (spawner != null)
+        {
+            spawner.boids.Remove(this);
+        }
     }
 
     Vector3 GetWanderDirection(Vector3 pos)
