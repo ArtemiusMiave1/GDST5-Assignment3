@@ -1,16 +1,24 @@
 using UnityEngine;
 
-public class destroyother : MonoBehaviour
+public class DestroyOther : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
+        if (other.CompareTag("Virus"))
+        {
+            NucleusBoid3D boid = other.GetComponent<NucleusBoid3D>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+            if (boid != null)
+            {
+                LineToTarget line = boid.GetComponent<LineToTarget>();
+
+                if (line != null)
+                {
+                    Destroy(line); // remove visual line
+                }
+
+                Destroy(boid.gameObject); // destroy full boid
+            }
+        }
     }
 }

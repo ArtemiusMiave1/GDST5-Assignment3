@@ -5,7 +5,12 @@ using TMPro;
 public class BoidSpawner : MonoBehaviour
 {
     public static BoidSpawner instance;
-    
+
+    public Color healthyColor = Color.red;
+    public Color infectedColor = new Color(0.2f, 0f, 0.2f);
+
+    public int infectedCells = 0;
+    public int infectedTarget = 100;
 
     [Header("Spawn")]
     public NucleusBoid3D boidPrefab;
@@ -15,18 +20,26 @@ public class BoidSpawner : MonoBehaviour
     [Header("References")]
     public Transform centerPoint;
 
+    [Header("Line Target (IMPORTANT)")]
+    public Transform directorObject;
+
     [Header("Boids")]
     public List<NucleusBoid3D> boids = new List<NucleusBoid3D>();
 
+    [Header("UI")]
     public TextMeshProUGUI countText;
+    public TextMeshProUGUI infectedText;
 
-    void Start()
+    private void Awake()
     {
-        SpawnBoids();
-        countText.text = "cells consumed = 0";
+        instance = this;
     }
 
-    // Spawn initial swarm
+    private void Start()
+    {
+        SpawnBoids();
+    }
+
     void SpawnBoids()
     {
         for (int i = 0; i < boidCount; i++)
@@ -39,32 +52,42 @@ public class BoidSpawner : MonoBehaviour
         }
     }
 
-    //public void AddPoint()
-    //{
-    //           countText.text = "cells consumed = " + (boids.Count - boidCount);
-    //}
-
-    // MAIN FUNCTION: spawn + register a single boid
     public NucleusBoid3D SpawnBoid(Vector3 position)
     {
-        NucleusBoid3D boid = 
-            Instantiate(
-                boidPrefab,
-                position,
-                Quaternion.identity
-            );
+        NucleusBoid3D boid =
+            Instantiate(boidPrefab, position, Quaternion.identity);
 
-        // Assign references
+        // ----------------------------
+        // CORE REFERENCES
+        // ----------------------------
         boid.spawner = this;
         boid.centerPoint = centerPoint;
 
-        // Register in list
         boids.Add(boid);
+
+        // ----------------------------
+        // LINE ATTACHMENT (NEW PART)
+        // ----------------------------
+        LineToTarget line = boid.GetComponent<LineToTarget>();
+
+        if (line == null)
+        {
+            line = boid.gameObject.AddComponent<LineToTarget>();
+        }
+
+        if (boids.Count > 1)
+        {
+            int randomIndex = Random.Range(0, boids.Count);
+            line.target = boids[randomIndex].transform;
+        }
+        else
+        {
+            line.target = directorObject; // fallback
+        }
 
         return boid;
     }
 
-    // Optional: remove safely
     public void RemoveBoid(NucleusBoid3D boid)
     {
         if (boids.Contains(boid))
@@ -73,40 +96,15 @@ public class BoidSpawner : MonoBehaviour
         }
     }
 
-    public void Update()
+    void Update()
     {
-        countText.text = "Viruses Duplicated = " + (boids.Count - boidCount);
-        print(boids.Count);
-        print(boidCount);
+        countText.text = "Viruses = " + boids.Count;
+
+        infectedText.text =
+            "Infection = " + Mathf.Min(infectedCells, infectedTarget) + "%";
+
+        float infectionPercent =
+            (float)infectedCells / infectedTarget;
+
     }
 }
-
-
-//using UnityEngine;
-
-//public class BoidSpawner : MonoBehaviour
-//{
-//    public OrbitBoid boidPrefab;
-
-//    public Transform centerPoint;
-
-//    public int count = 50;
-
-//    void Start()
-//    {
-//        for (int i = 0; i < count; i++)
-//        {
-//            Vector2 pos =
-//                Random.insideUnitCircle * 4f;
-
-//            OrbitBoid boid =
-//                Instantiate(
-//                    boidPrefab,
-//                    pos,
-//                    Quaternion.identity
-//                );
-
-//            boid.centerPoint = centerPoint;
-//        }
-//    }
-//}

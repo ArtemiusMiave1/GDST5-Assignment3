@@ -44,12 +44,13 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ScrollingSpeed: 0.02
+    - _ScrollingSpeed: -0.02
     - _SurfaceMovementSpeed: 0.01
     - _noiseScale: 0.001
     - _wave_strength: 0
     m_Colors:
-    - _ColorTexture: {r: 1, g: 0.081081085, b: 0, a: 1}
+    - _BaseColor: {r: 1, g: 0, b: 0, a: 1}
+    - _ColorTexture: {r: 1, g: 0.08235294, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &5392198790897155685

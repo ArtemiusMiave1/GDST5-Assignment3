@@ -3,8 +3,12 @@ using UnityEngine;
 
 public class BloodCellSpawner : MonoBehaviour
 {
-    [Header("Prefab")]
+    [Header("Prefabs")]
     public GameObject bloodCellPrefab;
+    public GameObject infectedBloodCellPrefab;
+
+    [Header("References")]
+    public BoidSpawner boidSpawner;
 
     [Header("Spawn Area")]
     public float spawnRadius = 5f;
@@ -20,6 +24,11 @@ public class BloodCellSpawner : MonoBehaviour
 
     void Start()
     {
+        if (boidSpawner == null)
+        {
+            boidSpawner = FindFirstObjectByType<BoidSpawner>();
+        }
+
         StartCoroutine(SpawnLoop());
     }
 
@@ -32,10 +41,8 @@ public class BloodCellSpawner : MonoBehaviour
 
             yield return new WaitForSeconds(waitTime);
 
-            if (currentCount < maxCells)
-            {
-                SpawnCell();
-            }
+            SpawnCell();
+
         }
     }
 
@@ -45,12 +52,29 @@ public class BloodCellSpawner : MonoBehaviour
             transform.position +
             Random.insideUnitSphere * spawnRadius;
 
+        GameObject prefabToSpawn = bloodCellPrefab;
+
+        if (boidSpawner != null)
+        {
+            float infectionChance =
+                ((float)boidSpawner.infectedCells*(float)0.8) /
+                boidSpawner.infectedTarget;
+
+            if (Random.value < infectionChance)
+            {
+                prefabToSpawn = infectedBloodCellPrefab;
+            }
+        }
+
         GameObject cell =
-            Instantiate(bloodCellPrefab, randomPos, Quaternion.identity);
+            Instantiate(
+                prefabToSpawn,
+                randomPos,
+                Quaternion.identity
+            );
 
         currentCount++;
 
-        // Optional: track destruction safely
         StartCoroutine(TrackCell(cell));
     }
 

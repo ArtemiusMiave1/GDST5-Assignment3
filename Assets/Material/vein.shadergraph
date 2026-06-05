@@ -3619,7 +3619,7 @@
     "m_DefaultRefNameVersion": 1,
     "m_RefNameGeneratedByDisplayName": "ColorTexture",
     "m_DefaultReferenceName": "_ColorTexture",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_BaseColor",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
@@ -3631,9 +3631,9 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "r": 0.496736615896225,
-        "g": 0.9811320900917053,
-        "b": 0.9561976790428162,
+        "r": 0.0,
+        "g": 1.0,
+        "b": 0.9512195587158203,
         "a": 1.0
     },
     "isMainColor": false,
