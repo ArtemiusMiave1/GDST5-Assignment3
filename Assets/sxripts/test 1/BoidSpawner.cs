@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class BoidSpawner : MonoBehaviour
 {
+    public static BoidSpawner instance;
+    
+
     [Header("Spawn")]
     public NucleusBoid3D boidPrefab;
     public int boidCount = 50;
@@ -14,9 +18,12 @@ public class BoidSpawner : MonoBehaviour
     [Header("Boids")]
     public List<NucleusBoid3D> boids = new List<NucleusBoid3D>();
 
+    public TextMeshProUGUI countText;
+
     void Start()
     {
         SpawnBoids();
+        countText.text = "cells consumed = 0";
     }
 
     // Spawn initial swarm
@@ -32,10 +39,15 @@ public class BoidSpawner : MonoBehaviour
         }
     }
 
+    //public void AddPoint()
+    //{
+    //           countText.text = "cells consumed = " + (boids.Count - boidCount);
+    //}
+
     // MAIN FUNCTION: spawn + register a single boid
     public NucleusBoid3D SpawnBoid(Vector3 position)
     {
-        NucleusBoid3D boid =
+        NucleusBoid3D boid = 
             Instantiate(
                 boidPrefab,
                 position,
@@ -59,6 +71,13 @@ public class BoidSpawner : MonoBehaviour
         {
             boids.Remove(boid);
         }
+    }
+
+    public void Update()
+    {
+        countText.text = "Viruses Duplicated = " + (boids.Count - boidCount);
+        print(boids.Count);
+        print(boidCount);
     }
 }
 

@@ -13,6 +13,9 @@ public class NucleusBoid3D : MonoBehaviour
     public float minSpeed = 1f;
     public float maxSpeed = 5f;
 
+    static Vector3 clickOrigin;
+    static bool clickActive;
+
     [Header("test")]
     public static bool triggerPush;
     public static Vector3 pushOrigin;
@@ -48,8 +51,8 @@ public class NucleusBoid3D : MonoBehaviour
 
     void OnEnable()
     {
-        velocity = Random.insideUnitSphere;
-        spawner.boids.Add(this);
+        //velocity = Random.insideUnitSphere;
+        //spawner.boids.Add(this);
     }
 
     void OnDisable()
@@ -60,20 +63,20 @@ public class NucleusBoid3D : MonoBehaviour
     void Start()
     {
         velocity = Random.insideUnitSphere;
-        spawner.boids.Add(this);
-        if (spawner == null)
-        {
-            spawner = FindFirstObjectByType<BoidSpawner>();
-        }
+        //spawner.boids.Add(this);
+        //if (spawner == null)
+        //{
+        //    spawner = FindFirstObjectByType<BoidSpawner>();
+        //}
 
-        if (spawner != null)
-        {
-            spawner.boids.Add(this);
-        }
-        else
-        {
-            Debug.LogError("No BoidSpawner found in scene");
-        }
+        //if (spawner != null)
+        //{
+        //    spawner.boids.Add(this);
+        //}
+        //else
+        //{
+        //    Debug.LogError("No BoidSpawner found in scene");
+        //}
     }
 
     void OnDestroy()
@@ -99,6 +102,43 @@ public class NucleusBoid3D : MonoBehaviour
 
     void Update()
     {
+        if (centerPoint == null) return;
+        if (spawner == null) return;
+        if (Mouse.current == null) return;
+        if (Camera.main == null) return;
+
+
+        //if (Mouse.current.leftButton.wasPressedThisFrame)
+        //{
+        //    clickActive = true;
+
+        //    Vector2 mousePos = Mouse.current.position.ReadValue();
+
+        //    clickOrigin =
+        //        Camera.main.ScreenToWorldPoint(
+        //            new Vector3(mousePos.x, mousePos.y, 10f)
+        //        );
+        //}
+
+        //Vector3 clickForce = Vector3.zero;
+
+        //if (clickActive)
+        //{
+        //    Vector3 pushDir = transform.position - clickOrigin;
+
+        //    float pushDist = pushDir.magnitude;
+
+        //    if (pushDist > 0.01f)
+        //    {
+        //        pushDir.Normalize();
+
+        //        float falloff =
+        //            1f / (1f + pushDist * clickRadiusMultiplier);
+
+        //        clickForce =
+        //            pushDir * clickPushStrength * falloff;
+        //    }
+        //}
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             triggerPush = true;

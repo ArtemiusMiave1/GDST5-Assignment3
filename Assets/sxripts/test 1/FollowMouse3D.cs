@@ -7,7 +7,6 @@ public class FollowMouse3D : MonoBehaviour
 
     void Start()
     {
-        test = 10f;
         distance.z = test;
     }
 
