@@ -2,18 +2,26 @@ using UnityEngine;
 
 public class MusicPlayer : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioClip music;
-
+    [Header("Audio source")]
+    [SerializeField] AudioSource SFXSource;
     [SerializeField] AudioSource musicSource;
+    [Header("audio clip")]
+    public AudioClip music;
+    public AudioClip create;
+    public AudioClip destroy;
     void Start()
     {
         musicSource.clip = music;
-        audioSource.Play();
+        musicSource.Play();
     }
 
     public void StopMusic()
     {
-        audioSource.Stop();
+        musicSource.Stop();
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        SFXSource.PlayOneShot(clip);
     }
 }

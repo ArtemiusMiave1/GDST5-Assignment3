@@ -1,28 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class NucleusBoid3D : MonoBehaviour
 {
     [HideInInspector]
     public BoidSpawner spawner;
 
-    float pushTimer = 0f;
-    public float pushDuration = 0.15f;
-
     public float minSpeed = 1f;
     public float maxSpeed = 5f;
-
-    static Vector3 clickOrigin;
-    static bool clickActive;
-
-    [Header("test")]
-    public static bool triggerPush;
-    public static Vector3 pushOrigin;
-
-    [Header("Mouse Interaction")]
-    public float clickPushStrength = 10f;
-    public float clickRadiusMultiplier = 1f;
 
     [Header("Wander")]
     public float wanderStrength = 3f;
@@ -49,34 +34,15 @@ public class NucleusBoid3D : MonoBehaviour
 
     Vector3 velocity;
 
-    void OnEnable()
-    {
-        //velocity = Random.insideUnitSphere;
-        //spawner.boids.Add(this);
-    }
-
     void OnDisable()
     {
-        spawner.boids.Remove(this);
+        if (spawner != null)
+            spawner.boids.Remove(this);
     }
 
     void Start()
     {
         velocity = Random.insideUnitSphere;
-        //spawner.boids.Add(this);
-        //if (spawner == null)
-        //{
-        //    spawner = FindFirstObjectByType<BoidSpawner>();
-        //}
-
-        //if (spawner != null)
-        //{
-        //    spawner.boids.Add(this);
-        //}
-        //else
-        //{
-        //    Debug.LogError("No BoidSpawner found in scene");
-        //}
     }
 
     void OnDestroy()
@@ -104,68 +70,6 @@ public class NucleusBoid3D : MonoBehaviour
     {
         if (centerPoint == null) return;
         if (spawner == null) return;
-        if (Mouse.current == null) return;
-        if (Camera.main == null) return;
-
-
-        //if (Mouse.current.leftButton.wasPressedThisFrame)
-        //{
-        //    clickActive = true;
-
-        //    Vector2 mousePos = Mouse.current.position.ReadValue();
-
-        //    clickOrigin =
-        //        Camera.main.ScreenToWorldPoint(
-        //            new Vector3(mousePos.x, mousePos.y, 10f)
-        //        );
-        //}
-
-        //Vector3 clickForce = Vector3.zero;
-
-        //if (clickActive)
-        //{
-        //    Vector3 pushDir = transform.position - clickOrigin;
-
-        //    float pushDist = pushDir.magnitude;
-
-        //    if (pushDist > 0.01f)
-        //    {
-        //        pushDir.Normalize();
-
-        //        float falloff =
-        //            1f / (1f + pushDist * clickRadiusMultiplier);
-
-        //        clickForce =
-        //            pushDir * clickPushStrength * falloff;
-        //    }
-        //}
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            triggerPush = true;
-            pushOrigin = centerPoint.position;
-            pushTimer = pushDuration;
-        }
-
-        Vector3 clickForce = Vector3.zero;
-
-        if (triggerPush)
-        {
-            Vector3 pushDir =
-                (transform.position - pushOrigin);
-
-            float pushDist = pushDir.magnitude;
-
-            if (pushDist > 0.01f)
-            {
-                pushDir.Normalize();
-
-                float falloff = 1;
-                //1f / (1f + pushDist * clickRadiusMultiplier);
-
-                clickForce =
-                    pushDir * clickPushStrength * falloff;
-            }
-        }
 
         Vector3 pos = transform.position;
 
@@ -180,7 +84,9 @@ public class NucleusBoid3D : MonoBehaviour
         //--------------------------------
 
         Vector3 swirl =
-            Vector3.Cross((pos - centerPoint.position).normalized, Vector3.up)
+            Vector3.Cross(
+                (pos - centerPoint.position).normalized,
+                Vector3.up)
             * wanderStrength;
 
         Vector3 wander =
@@ -217,6 +123,7 @@ public class NucleusBoid3D : MonoBehaviour
         foreach (var other in spawner.boids)
         {
             if (other == this) continue;
+            if (other == null) continue;
 
             float d =
                 Vector3.Distance(pos, other.transform.position);
@@ -226,7 +133,8 @@ public class NucleusBoid3D : MonoBehaviour
                 Vector3 away =
                     pos - other.transform.position;
 
-                separation += away.normalized / Mathf.Max(d, 0.01f);
+                separation +=
+                    away.normalized / Mathf.Max(d, 0.01f);
             }
         }
 
@@ -253,31 +161,18 @@ public class NucleusBoid3D : MonoBehaviour
         // COMBINE
         //--------------------------------
 
-
         Vector3 acceleration =
-    centerForce +
-    boundaryForce +
-    separation +
-    pulseForce +
-    noise +
-    wander +
-    swirl +
-    clickForce;
+            centerForce +
+            boundaryForce +
+            separation +
+            pulseForce +
+            noise +
+            wander +
+            swirl;
 
-        acceleration += swirl + clickForce;
         velocity += acceleration * Time.deltaTime;
         velocity *= damping;
 
-        transform.position += velocity * Time.deltaTime;
-        
-        //velocity += acceleration * Time.deltaTime;
-        //velocity *= damping;
-        //acceleration += swirl;
-        //acceleration += clickForce;
-        //velocity += clickForce;
-
-        //transform.position +=
-        //    velocity * Time.deltaTime;
         velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
         if (velocity.magnitude < minSpeed)
@@ -285,12 +180,17 @@ public class NucleusBoid3D : MonoBehaviour
             velocity = velocity.normalized * minSpeed;
         }
 
-        if (triggerPush)
-        {
-            pushTimer -= Time.deltaTime;
+        transform.position += velocity * Time.deltaTime;
+    }
 
-            if (pushTimer <= 0f)
-                triggerPush = false;
+    public void Push(Vector3 centerPosition, float strength)
+    {
+        Vector3 pushDir = transform.position - centerPosition;
+
+        if (pushDir.sqrMagnitude > 0.001f)
+        {
+            pushDir.Normalize();
+            velocity += pushDir * strength;
         }
     }
 }

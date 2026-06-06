@@ -146,11 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NucleusBoid3D
   spawner: {fileID: 0}
-  pushDuration: 0.3
   minSpeed: 1
-  maxSpeed: 75
-  clickPushStrength: 40
-  clickRadiusMultiplier: 10
+  maxSpeed: 125
   wanderStrength: 1
   wanderSpeed: 0.1
   centerPoint: {fileID: 0}
