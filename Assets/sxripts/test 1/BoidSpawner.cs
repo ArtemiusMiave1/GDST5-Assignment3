@@ -5,6 +5,10 @@ using UnityEngine.InputSystem;
 
 public class BoidSpawner : MonoBehaviour
 {
+    [Header("Push Cooldown")]
+    public float pushCooldown = 1f;
+    private float pushCooldownTimer = 0f;
+
     public static BoidSpawner instance;
     public float pressForce = 10f;
 
@@ -139,9 +143,15 @@ public class BoidSpawner : MonoBehaviour
         float infectionPercent =
                 (float)infectedCells / infectedTarget;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (pushCooldownTimer > 0f)
+        {
+            pushCooldownTimer -= Time.deltaTime;
+        }
+
+        if (Mouse.current.leftButton.wasPressedThisFrame && pushCooldownTimer <= 0f)
         {
             PushAllBoids(pressForce);
+            pushCooldownTimer = pushCooldown;
         }
     }
 }

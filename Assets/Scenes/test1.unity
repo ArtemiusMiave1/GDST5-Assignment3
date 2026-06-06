@@ -563,6 +563,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b05e87aeb9b4842ae9130044bffee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoidSpawner
+  pushCooldown: 1
   pressForce: 10
   healthyColor: {r: 1, g: 0, b: 0, a: 1}
   infectedColor: {r: 0.2, g: 0, b: 0.2, a: 1}
@@ -2142,6 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b05e87aeb9b4842ae9130044bffee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoidSpawner
+  pushCooldown: 1
   pressForce: 10
   healthyColor: {r: 1, g: 0, b: 0, a: 1}
   infectedColor: {r: 0.2, g: 0, b: 0.2, a: 1}
@@ -2742,7 +2744,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f99a50460c41e6d44ad7489ae09157a2, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.4
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -4110,7 +4112,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b05e87aeb9b4842ae9130044bffee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoidSpawner
-  pressForce: 10
+  pushCooldown: 1
+  pressForce: 40
   healthyColor: {r: 1, g: 0, b: 0, a: 1}
   infectedColor: {r: 0.2, g: 0, b: 0.2, a: 1}
   infectedCells: 0
