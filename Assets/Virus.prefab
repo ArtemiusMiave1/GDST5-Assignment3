@@ -147,15 +147,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NucleusBoid3D
   spawner: {fileID: 0}
   minSpeed: 1
-  maxSpeed: 125
+  maxSpeed: 75
   wanderStrength: 1
   wanderSpeed: 0.1
   centerPoint: {fileID: 0}
   maxRadius: 4
   coreRadius: 1
   centerPullStrength: 1
-  separationStrength: 40
-  damping: 0.995
+  separationStrength: 50
+  damping: 0.998
   pulseStrength: 3
   pulseSpeed: 2
   noiseStrength: 0.4
